@@ -1,0 +1,51 @@
+- name: "Wait for target to become available if needed"
+  wait_for_connection:
+
+- name: "Gather facts"
+  setup:
+
+- name: "Install k8s Repo"
+  copy:
+    src: /home/ian/projects/vs_ansible/files/k8s.repo
+    dest: /etc/yum.repos.d/k8s.repo
+    owner: root
+    group: root
+    mode: 0644
+
+- name: "Install kubeadm"
+  yum:
+    name: kubeadm
+    state: present
+
+- name: "Install Docker"
+  yum:
+    name: docker
+    state: present
+
+- name: "Start kubelet"
+  service:
+    name: kubelet
+    state: started
+    enabled: yes
+
+- name: "Start Docker"
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: "Disable Swap"
+  shell: |
+    swapoff -a
+  when: "ansible_swaptotal_mb > 0"
+
+- name: "Remove Swap from fstab"
+  ansible.posix.mount:
+    path: "swap"
+    state: absent
+
+- name: "Disable Firewall"
+  service:
+    name: firewalld
+    state: stopped
+    enabled: no

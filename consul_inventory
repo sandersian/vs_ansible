@@ -1,0 +1,35 @@
+#!/bin/bash
+
+export CURL_CA_BUNDLE=$CONSUL_CACERT
+
+if [ $CONSUL_HTTP_SSL == "true" ]; then
+	consul_addr="https://$CONSUL_HTTP_ADDR"
+else
+	consul_addr="http://$CONSUL_HTTP_ADDR"
+fi
+
+HEADER=$(cat<<EOF
+{
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    },
+    "ungrouped": {
+        "hosts": [
+EOF
+)
+
+MEAT=$(curl -s --get $consul_addr/v1/catalog/services | jq 'to_entries|.[]|select(.value[]|select(.=="host") ).key' | sed ':a;N;$!ba;s/\n/,/g')
+
+FOOTER=$(cat<<EOF
+        ]
+    }
+}
+EOF
+)
+
+echo $HEADER $MEAT $FOOTER | jq -M
