@@ -2,7 +2,7 @@
 
 export CURL_CA_BUNDLE=$CONSUL_CACERT
 
-if [ $CONSUL_HTTP_SSL = "true" ]; then
+if [[ $CONSUL_HTTP_SSL == "true" ]]; then
 	consul_addr="https://$CONSUL_HTTP_ADDR"
 else
 	consul_addr="http://$CONSUL_HTTP_ADDR"
