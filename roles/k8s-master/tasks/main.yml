@@ -1,0 +1,8 @@
+- name: "Wait for target to become available if needed"
+  wait_for_connection:
+
+- name: "Gather facts"
+  setup:
+
+- name: "Init K8s"
+  shell: kubeadm init --pod-network-cidr={{ lookup('community.general.hashi_vault', "secret=secret/data/k8s_config/master_node_config:pod_cidr_network ca_cert={{ lookup('env', 'VAULT_CAPATH') }}") }}
