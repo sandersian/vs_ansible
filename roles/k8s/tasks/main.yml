@@ -6,7 +6,7 @@
 
 - name: "Install k8s Repo"
   copy:
-    src: /home/ian/projects/vs_ansible/files/k8s.repo
+    src: files/k8s.repo
     dest: /etc/yum.repos.d/k8s.repo
     owner: root
     group: root
