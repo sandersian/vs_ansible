@@ -29,4 +29,4 @@ FOOTER=$(cat<<EOF
 EOF
 )
 
-echo $HEADER $MEAT $FOOTER | jq
+echo $HEADER $MEAT $FOOTER
