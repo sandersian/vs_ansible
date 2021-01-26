@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 
 export CURL_CA_BUNDLE=$CONSUL_CACERT
 
