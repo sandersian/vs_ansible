@@ -23,7 +23,8 @@ HEADER=$(cat<<EOF
 EOF
 )
 
-MEAT=$(curl -s --get $consul_addr/v1/catalog/services | jq 'to_entries|.[]|select(.value[]|select(.=="host") ).key' | sed ':a;N;$!ba;s/\n/,/g')
+#MEAT=$(curl -s --get $consul_addr/v1/catalog/services | jq 'to_entries|.[]|select(.value[]|select(.=="host") ).key' | sed ':a;N;$!ba;s/\n/,/g')
+MEAT=$(curl -s --get $consul_addr/v1/catalog/services)
 
 FOOTER=$(cat<<EOF
         ]
