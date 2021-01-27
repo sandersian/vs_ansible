@@ -4,4 +4,4 @@
   user: ansible
   become: true
   roles:
-  - k8s
+  - k8s-common
