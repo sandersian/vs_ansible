@@ -4,4 +4,4 @@
   user: ansible
   become: true
   roles:
-  - k8s-master
+  - k8s-cluster-init
