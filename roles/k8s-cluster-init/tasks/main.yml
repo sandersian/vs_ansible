@@ -14,7 +14,7 @@
 - name: "Init K8s - Debug"
   when: k8sinit.stdout is defined
   debug:
-    msg: "{{ "k8sinit.stdout" }}
+    msg: "{{ "k8sinit.stdout" }}"
   
 - name: "Get k8s join command"
   shell: kubeadm token create --print-join-command
