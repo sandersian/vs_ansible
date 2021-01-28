@@ -5,14 +5,14 @@
   setup:
 
 - name: "Init K8s"
-  command: kubeadm init --pod-network-cidr={{ lookup('community.general.hashi_vault', "secret=secret/data/k8s_config/master_node_config:pod_cidr_network ca_cert={{ lookup('env', 'VAULT_CAPATH') }}") }}
+  shell: kubeadm init --pod-network-cidr={{ lookup('community.general.hashi_vault', "secret=secret/data/k8s_config/master_node_config:pod_cidr_network ca_cert={{ lookup('env', 'VAULT_CAPATH') }}") }}
   args:
     creates: /etc/kubernetes/admin.conf
   when: "'mkube' in inventory_hostname"
   register: k8sinit
   
 - name: "Get k8s join command"
-  command: kubeadm token create --print-join-command
+  shell: kubeadm token create --print-join-command
   when: k8sinit is defined and inventory_hostname | regex_search ("^mkube.*", ingnore_case=True)
   register: k8sjoincommand
 
