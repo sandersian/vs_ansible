@@ -13,14 +13,14 @@
   
 - name: "Get k8s join command"
   shell: kubeadm token create --print-join-command
-  when: k8sinit is defined and inventory_hostname | regex_search ("^mkube.*", ingnore_case=True)
+  #when: k8sinit is defined and inventory_hostname | regex_search ("^mkube.*", ingnore_case=True)
   register: k8sjoincommand
 
 - name: "Join Workers to k8s cluster - debug"
   when: k8sjoincommand is defined and inventory_hostname | regex_search ("^kube.*", ingnore_case=True)
   debug:
     msg: "{{ k8sjoincommand.results }}"
-  with_itmes: "{{ k8sjoincommand.results }}"
+  with_items: "{{ k8sjoincommand.results }}"
 
 - name: "Join Workers to k8s cluster"
   when: k8sjoincommand is defined and inventory_hostname | regex_search ("^kube.*", ingnore_case=True)
