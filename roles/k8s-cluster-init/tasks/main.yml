@@ -17,12 +17,12 @@
   register: k8sjoincommand
 
 - name: "Join Workers to k8s cluster - debug"
-  when: k8sjoincommand is defined and inventory_hostname | regex_search ("^kube.*", ingnore_case=True)
-  with_items: "{{ k8sjoincommand }}"
+  when: hostvars['mkube01']['k8sjoincommand'] is defined and inventory_hostname | regex_search ("^kube.*", ingnore_case=True)
+  with_items: "{{ hostvars['mkube01']['k8sjoincommand'] }}"
   debug:
-    msg: "{{ k8sjoincommand.stdout }}"
+    msg: "{{ hostvars['mkube01']['k8sjoincommand'].stdout }}"
   
 - name: "Join Workers to k8s cluster"
-  when: k8sjoincommand is defined and inventory_hostname | regex_search ("^kube.*", ingnore_case=True)
-  with_items: "{{ k8sjoincommand }}"
-  shell: "{{ k8sjoincommand.stdout }}"
+  when: hostvars['mkube01']['k8sjoincommand'] is defined and inventory_hostname | regex_search ("^kube.*", ingnore_case=True)
+  with_items: "{{ hostvars['mkube01']['k8sjoincommand'] }}"
+  shell: "{{ hostvars['mkube01']['k8sjoincommand'].stdout }}"
