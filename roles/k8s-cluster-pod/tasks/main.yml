@@ -1,3 +1,4 @@
 - name: "Setup POD network"
-  when: hostvars['mkube01']['k8sjoincommand'].stdout is defined
+  with_items: "{{ groups['k8s-master'] }}"
+  when: k8sjoincommand.stdout is defined
   shell: "export KUBECONFIG=/etc/kubernetes/admin.conf && kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
