@@ -12,8 +12,7 @@ pipeline {
                         export VAULT_CAPATH
                         export VAULT_ADDR
                         . ./vault_consul_setup.bash
-                        ansible-playbook -i consul_inventory k8s-common.yml
-                        ansible-playbook -i consul_inventory k8s-cluster-init.yml
+                        ansible-playbook -i consul_inventory k8s.yml
                     '''
                 }
             }

@@ -1,0 +1,24 @@
+---
+- hosts: k8s_worker:k8s_master
+  user: ansible
+  become: true
+  roles:
+  - k8s-common
+
+- hosts: k8s_master
+  user: ansible
+  become: true
+  roles:
+  - k8s-cluster-master
+
+- hosts: k8s_worker
+  user: ansible
+  become: true
+  roles:
+  - k8s-cluster-worker
+
+- hosts: k8s_master
+  user: ansible
+  become: true
+  roles:
+  - k8s-cluster-pod

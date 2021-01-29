@@ -1,32 +1,25 @@
-#!/bin/bash
+#!/usr/bin/env python3
 
-export CURL_CA_BUNDLE=$CONSUL_CACERT
+import os
+import json
+import requests
 
-if [[ $CONSUL_HTTP_SSL == "true" ]]; then
-	consul_addr="https://$CONSUL_HTTP_ADDR"
-else
-	consul_addr="http://$CONSUL_HTTP_ADDR"
-fi
+if (os.environ.get('CONSUL_HTTP_SSL') == 'true'):
+    consulProto = "https://"
+else:
+    consulProto = "http://"
 
-HEADER=$(cat<<EOF
-{
-    "all": {
-        "children": [
-            "ungrouped"
-        ]
-    },
-    "ungrouped": {
-        "hosts": [
-EOF
-)
+url = consulProto + os.environ.get("CONSUL_HTTP_ADDR") + "/v1/catalog/services"
 
-MEAT=$(curl -s --get $consul_addr/v1/catalog/services | jq 'to_entries|.[]|select(.value[]|select(.=="host") ).key' | sed ':a;N;$!ba;s/\n/,/g')
+services_json = json.loads(requests.request("GET", url).text)
 
-FOOTER=$(cat<<EOF
-        ]
-    }
-}
-EOF
-)
+inventory = { }
 
-echo $HEADER $MEAT $FOOTER | jq -M
+for host in services_json.keys():
+    for tag in services_json[host]:
+        if tag in inventory.keys():
+            inventory[tag].append(host)
+        else:
+            inventory.update( { tag: [ host ] } )
+
+print(json.dumps(inventory))

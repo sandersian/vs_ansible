@@ -1,7 +1,0 @@
----
-- hosts: all
-  gather_facts: no
-  user: ansible
-  become: true
-  roles:
-  - k8s-common
