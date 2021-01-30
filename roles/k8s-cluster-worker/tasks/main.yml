@@ -1,9 +1,3 @@
-- name: "Join Workers to k8s cluster - debug"
-  when: hostvars[item]['k8sjoincommand'].stdout is defined
-  with_items: "{{ groups['k8s_master'] }}"
-  debug:
-    msg: "{{ hostvars[item]['k8sjoincommand'].stdout }}"
-  
 - name: "Join Workers to k8s cluster"
   when: hostvars[item]['k8sjoincommand'].stdout is defined
   with_items: "{{ groups['k8s_master'] }}"
