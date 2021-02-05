@@ -19,11 +19,13 @@ pipeline {
                     """
                 }
             }
-            success {
-                sh "~/bin/rocket_hook.sh AS '${env.BUILD_TAG} - k8s playbook - DONE'"
-            }
-            failure {
-                sh "~/bin/rocket_hook.sh AF '${env.BUILD_TAG} - k8s playbook - FAILED'"
+            post {
+                success {
+                    sh "~/bin/rocket_hook.sh AS '${env.BUILD_TAG} - k8s playbook - DONE'"
+                }
+                failure {
+                    sh "~/bin/rocket_hook.sh AF '${env.BUILD_TAG} - k8s playbook - FAILED'"
+                }
             }
         }
     }
