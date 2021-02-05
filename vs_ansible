@@ -9,14 +9,14 @@ pipeline {
                     usernameVariable: 'ROLE_ID'
                 )]) {
                     sh """
-                        ~/bin/rocket_hook.sh ${env.JOB_NAME} 'Terraform Init STARTING' ${env.BUILD_URL} #0000ff
+                        ~/bin/rocket_hook.sh ${env.JOB_NAME} 'Ansible STARTING' ${env.BUILD_URL} #0000ff
                         export VAULT_CAPATH
                         export VAULT_ADDR
                         export CONSUL_CACERT=$VAULT_CAPATH
                         export REQUESTS_CA_BUNDLE=$VAULT_CAPATH
                         . ./vault_consul_setup.bash
                         ansible-playbook -i consul_inventory k8s.yml
-                        ~/bin/rocket_hook.sh ${env.JOB_NAME} 'Terraform Init COMPLETE' ${env.BUILD_URL} #0000ff
+                        ~/bin/rocket_hook.sh ${env.JOB_NAME} 'Ansible COMPLETE' ${env.BUILD_URL} #0000ff
                     """
                 }
             }
