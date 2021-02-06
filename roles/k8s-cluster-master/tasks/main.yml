@@ -4,7 +4,11 @@
     creates: /etc/kubernetes/admin.conf
   register: k8sinit
 
+- name: "Debug k8sinit"
+  debug:
+    var: k8sinit
+
 - name: "Get k8s join command"
   shell: kubeadm token create --print-join-command
-  when: k8sinit is defined
+  when: k8sinit.changed is true
   register: k8sjoincommand
