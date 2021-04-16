@@ -27,7 +27,7 @@
     path: /nfs_data
     src: /dev/xvdb
     fstype: xfs
-    state: present
+    state: mounted
 
 - name: "Disable Firewall"
   service:
