@@ -22,3 +22,9 @@
   become: true
   roles:
   - k8s-cluster-pod
+
+- hosts: k8s_nfs
+  user: ansible
+  become: true
+  roles:
+  - k8s-nfs

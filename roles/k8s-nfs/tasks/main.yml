@@ -1,0 +1,17 @@
+- name: "Wait for target to become available if needed"
+  wait_for_connection:
+
+- name: "Gather facts"
+  setup:
+
+- name: "Install NFS Software"
+  yum:
+    name: nfs-utils
+    state: present
+
+- name: "Disable Firewall"
+  service:
+    name: firewalld
+    state: stopped
+    enabled: no
+
