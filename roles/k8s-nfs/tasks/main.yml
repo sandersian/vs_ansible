@@ -9,6 +9,26 @@
     name: nfs-utils
     state: present
 
+- name: "Create nfs data filesystem"
+  community.general.filesystem:
+    fstype: xfs
+    dev: /dev/xvdb
+
+- name: "Create nfs data mountpoint"
+  file:
+    path: /nfs_data
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: "Create nfs data mount"
+  ansible.posix.mount:
+    path: /nfs_data
+    src: /dev/xvdb
+    fstype: xfs
+    state: present
+
 - name: "Disable Firewall"
   service:
     name: firewalld
