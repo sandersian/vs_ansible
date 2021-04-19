@@ -9,6 +9,20 @@
     name: nfs-utils
     state: present
 
+- name: "Install exports"
+  copy:
+    src: files/exports
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: 0644
+
+- name: "Activate NFS Server"
+  service:
+    name: nfs-server
+    state: started
+    enabled: yes
+
 - name: "Create nfs data filesystem"
   community.general.filesystem:
     fstype: xfs
